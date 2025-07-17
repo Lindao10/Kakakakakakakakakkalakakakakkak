@@ -2715,3 +2715,38 @@ function redzlib:MakeWindow(Configs)
 end
 
 return redzlib
+
+function MinimizeButton(config)
+    local button = Instance.new("ImageButton")
+    button.Size = UDim2.new(0, config.Size[1], 0, config.Size[2])
+    button.BackgroundColor3 = config.Color or Color3.fromRGB(25, 25, 25)
+    button.BackgroundTransparency = 0
+    button.Image = config.Image or ""
+    button.AnchorPoint = Vector2.new(1, 0)
+    button.Position = UDim2.new(1, -10, 0, 10)
+    button.Name = "MinimizeButton"
+    button.Parent = game.CoreGui:FindFirstChildOfClass("ScreenGui")
+
+    -- Corner
+    if config.Corner then
+        local corner = Instance.new("UICorner")
+        corner.CornerRadius = UDim.new(1, 0)
+        corner.Parent = button
+    end
+
+    -- Stroke
+    if config.Stroke then
+        local stroke = Instance.new("UIStroke")
+        stroke.Color = config.StrokeColor or Color3.new(1,1,1)
+        stroke.Thickness = 1.5
+        stroke.Parent = button
+    end
+
+    -- Evento de minimizar
+    button.MouseButton1Click:Connect(function()
+        local mainGui = game.CoreGui:FindFirstChildOfClass("ScreenGui")
+        if mainGui then
+            mainGui.Enabled = not mainGui.Enabled
+        end
+    end)
+	end
